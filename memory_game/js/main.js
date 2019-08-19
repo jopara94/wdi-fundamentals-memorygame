@@ -20,6 +20,7 @@ suit: "diamonds",
 cardImage: "images/king-of-diamonds.png",
 },
 ];
+//confim matching cards
 var cardsInPlay = [];
 function checkForMatch() {
 	if (cardsInPlay[0] === cardsInPlay[1]) {
@@ -28,11 +29,14 @@ function checkForMatch() {
   console.log("Sorry, try again.");
 }
 }
-function flipcard(cardId) {
+//flip card function
+function flipCard() {
+	var cardId = this.getAttribute('data-id');
 	console.log("User flipped " + cards[cardId].rank);
 	cardsInPlay.push(cards[cardId].rank);
 	console.log(cards[cardId].cardImage);
 	console.log(cards[cardId].suit);
+	this.setAttribute('src', cards[cardId].cardImage);
 if (cardsInPlay.length === 2) {
 	if (cardsInPlay[0] === cardsInPlay[1]) {
 		alert("You found a match!");
@@ -42,5 +46,16 @@ if (cardsInPlay.length === 2) {
 	checkForMatch();
 };
 };
-flipcard(0);
-flipcard(2);
+
+//creates board
+function createBoard() {
+	for(var i = 0; i < cards.length; i++) {
+		var cardElement = document.createElement('img');
+		cardElement.setAttribute('src', 'images/back.png');
+		cardElement.setAttribute('data-id', i);
+		cardElement.addEventListener('click', flipCard);
+		document.getElementById('game-board').appendChild(cardElement);
+	}
+}
+
+createBoard();
